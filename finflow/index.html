@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinFlow - Your Personal Finance Manager</title>
+    <link rel="stylesheet" href="css/output.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Defer attribute ensures they are executed after HTML parsing but before DOMContentLoaded for main.js -->
+    <script src="js/lib/chart.min.js" defer></script>
+    <script src="js/lib/dayjs.min.js" defer></script>
+    <!-- Main entry point for application JavaScript, loaded as a module -->
+    <script type="module" src="js/src/main.js" defer></script>
+</head>
+<body class="bg-light-gray-bg font-sans">
+    <div class="flex h-screen">
+        <!-- Desktop Sidebar -->
+        <aside id="desktop-sidebar" class="hidden md:flex md:flex-col md:w-64 bg-white-surface shadow-lg">
+            <div class="flex items-center justify-center h-20 border-b border-gray-200">
+                <img src="img/logo.svg" alt="FinFlow Logo" class="h-10 w-auto mr-2">
+                <span class="text-xl font-semibold text-dark-gray-text">FinFlow</span>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="#" data-section="dashboard-section" class="nav-link active-link flex items-center px-3 py-2.5 text-sm font-medium text-dark-gray-text rounded-lg hover:bg-light-gray-bg">
+                    <svg class="w-5 h-5 mr-3 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Dashboard
+                </a>
+                <a href="#" data-section="budget-section" class="nav-link flex items-center px-3 py-2.5 text-sm font-medium text-dark-gray-text rounded-lg hover:bg-light-gray-bg">
+                    <svg class="w-5 h-5 mr-3 text-medium-gray-text group-hover:text-dark-gray-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Monthly Budget
+                </a>
+                <a href="#" data-section="stats-section" class="nav-link flex items-center px-3 py-2.5 text-sm font-medium text-dark-gray-text rounded-lg hover:bg-light-gray-bg">
+                    <svg class="w-5 h-5 mr-3 text-medium-gray-text group-hover:text-dark-gray-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    Statistics
+                </a>
+                <a href="#" data-section="add-expense-section" class="nav-link flex items-center px-3 py-2.5 text-sm font-medium text-dark-gray-text rounded-lg hover:bg-light-gray-bg">
+                     <svg class="w-5 h-5 mr-3 text-medium-gray-text group-hover:text-dark-gray-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Add Expense
+                </a>
+            </nav>
+            <div class="px-4 py-6 border-t border-gray-200">
+                <a href="#" id="logout-button" class="flex items-center px-3 py-2.5 text-sm font-medium text-dark-gray-text rounded-lg hover:bg-light-gray-bg">
+                    <svg class="w-5 h-5 mr-3 text-medium-gray-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Mobile Header (Optional - can be part of main content's header) -->
+            <div class="md:hidden flex items-center justify-between p-4 bg-white-surface shadow-md">
+                <div class="flex items-center">
+                    <img src="img/logo.svg" alt="FinFlow Logo" class="h-8 w-auto mr-2">
+                    <span class="text-lg font-semibold text-dark-gray-text">FinFlow</span>
+                </div>
+                <!-- Hamburger for mobile sidebar if we decide to have one later -->
+                <!-- <button id="mobile-menu-button" class="text-dark-gray-text focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button> -->
+            </div>
+
+            <div class="p-6 flex-1">
+                <div id="dashboard-section" class="content-section">
+                    <!-- Page Header -->
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-dark-gray-text">Dashboard</h1>
+                        <p class="text-medium-gray-text mt-1">Welcome back! Here's your financial overview.</p>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Current Balance Card -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-6">
+                            <h3 class="text-sm font-medium text-medium-gray-text mb-1">Current Balance</h3>
+                            <p class="text-3xl font-semibold text-primary-green">$10,250.75</p>
+                        </div>
+
+                        <!-- Total Income Card -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-6">
+                            <h3 class="text-sm font-medium text-medium-gray-text mb-1">Total Income (This Month)</h3>
+                            <p class="text-3xl font-semibold text-primary-green">$5,000.00</p>
+                        </div>
+
+                        <!-- Total Expenses Card -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-6">
+                            <h3 class="text-sm font-medium text-medium-gray-text mb-1">Total Expenses (This Month)</h3>
+                            <p class="text-3xl font-semibold text-secondary-peach">$1,890.20</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions List -->
+                    <div class="bg-white-surface rounded-xl shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-semibold text-dark-gray-text">Recent Transactions</h3>
+                            <a href="#" data-section="stats-section" class="nav-link text-sm font-medium text-accent-blue hover:text-blue-500">View All</a>
+                        </div>
+                        <div class="space-y-4">
+                            <!-- Transaction Item 1 -->
+                            <div class="flex items-center py-3 border-b border-gray-100 last:border-b-0">
+                                <div class="w-8 h-8 rounded-full bg-red-200 flex-shrink-0 mr-4"></div> <!-- Category Icon Placeholder -->
+                                <div class="flex-grow">
+                                    <p class="text-sm font-medium text-dark-gray-text">Netflix Subscription</p>
+                                    <p class="text-xs text-medium-gray-text">Oct 25, 2023</p>
+                                </div>
+                                <div class="text-sm font-medium text-secondary-peach">-$15.99</div>
+                            </div>
+                            <!-- Transaction Item 2 -->
+                            <div class="flex items-center py-3 border-b border-gray-100 last:border-b-0">
+                                <div class="w-8 h-8 rounded-full bg-green-200 flex-shrink-0 mr-4"></div> <!-- Category Icon Placeholder -->
+                                <div class="flex-grow">
+                                    <p class="text-sm font-medium text-dark-gray-text">Salary Deposit</p>
+                                    <p class="text-xs text-medium-gray-text">Oct 24, 2023</p>
+                                </div>
+                                <div class="text-sm font-medium text-primary-green">+$2,500.00</div>
+                            </div>
+                            <!-- Transaction Item 3 -->
+                            <div class="flex items-center py-3 border-b border-gray-100 last:border-b-0">
+                                <div class="w-8 h-8 rounded-full bg-blue-200 flex-shrink-0 mr-4"></div> <!-- Category Icon Placeholder -->
+                                <div class="flex-grow">
+                                    <p class="text-sm font-medium text-dark-gray-text">Grocery Shopping</p>
+                                    <p class="text-xs text-medium-gray-text">Oct 23, 2023</p>
+                                </div>
+                                <div class="text-sm font-medium text-secondary-peach">-$75.40</div>
+                            </div>
+                            <!-- Transaction Item 4 -->
+                            <div class="flex items-center py-3 border-b border-gray-100 last:border-b-0">
+                                <div class="w-8 h-8 rounded-full bg-yellow-200 flex-shrink-0 mr-4"></div> <!-- Category Icon Placeholder -->
+                                <div class="flex-grow">
+                                    <p class="text-sm font-medium text-dark-gray-text">Gas Bill</p>
+                                    <p class="text-xs text-medium-gray-text">Oct 22, 2023</p>
+                                </div>
+                                <div class="text-sm font-medium text-secondary-peach">-$55.00</div>
+                            </div>
+                            <!-- Transaction Item 5 -->
+                            <div class="flex items-center py-3 last:border-b-0">
+                                <div class="w-8 h-8 rounded-full bg-purple-200 flex-shrink-0 mr-4"></div> <!-- Category Icon Placeholder -->
+                                <div class="flex-grow">
+                                    <p class="text-sm font-medium text-dark-gray-text">Coffee Shop</p>
+                                    <p class="text-xs text-medium-gray-text">Oct 21, 2023</p>
+                                </div>
+                                <div class="text-sm font-medium text-secondary-peach">-$4.75</div>
+                            </div>
+
+                            <!-- Placeholder for No Transactions -->
+                            <!-- <p class="text-center text-medium-gray-text py-4">No recent transactions.</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div id="budget-section" class="content-section hidden">
+                    <!-- Page Header -->
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-dark-gray-text">Monthly Budget Planning</h1>
+                        <p class="text-medium-gray-text mt-1">Manage and plan your expenses for the month.</p>
+                    </div>
+
+                    <!-- Month Selector & Summary -->
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-8 p-6 bg-white-surface rounded-xl shadow-lg gap-6">
+                        <div class="flex items-center space-x-3">
+                            <label for="month-select" class="text-sm font-medium text-medium-gray-text">Select Month:</label>
+                            <select id="month-select" name="month-select" class="block w-full md:w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-accent-blue focus:border-accent-blue sm:text-sm rounded-md shadow-sm neumorphic-inset">
+                                <option>October 2023</option>
+                                <option selected>November 2023</option>
+                                <option>December 2023</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 text-center sm:text-left">
+                            <div>
+                                <p class="text-sm text-medium-gray-text">Total Budgeted</p>
+                                <p class="text-xl font-semibold text-dark-gray-text">$3,500.00</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-medium-gray-text">Remaining Budget</p>
+                                <p class="text-xl font-semibold text-primary-green">$1,250.50</p>
+                                <!-- Example for overspent: <p class="text-xl font-semibold text-secondary-peach">-$200.00</p> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Budget Categories List -->
+                    <div class="space-y-6">
+                        <!-- Category Item: Food -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div class="w-full md:w-1/4">
+                                    <h4 class="text-lg font-semibold text-dark-gray-text">Food</h4>
+                                </div>
+                                <div class="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Budgeted</p>
+                                        <p class="text-md font-medium text-dark-gray-text">$500.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Spent</p>
+                                        <p class="text-md font-medium text-medium-gray-text">$350.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Remaining</p>
+                                        <p class="text-md font-medium text-primary-green">$150.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="bg-gray-200 rounded-full h-2.5 w-full">
+                                    <div class="bg-accent-blue h-2.5 rounded-full" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Category Item: Rent/Mortgage -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div class="w-full md:w-1/4">
+                                    <h4 class="text-lg font-semibold text-dark-gray-text">Rent/Mortgage</h4>
+                                </div>
+                                <div class="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Budgeted</p>
+                                        <p class="text-md font-medium text-dark-gray-text">$1,500.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Spent</p>
+                                        <p class="text-md font-medium text-medium-gray-text">$1,500.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Remaining</p>
+                                        <p class="text-md font-medium text-primary-green">$0.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="bg-gray-200 rounded-full h-2.5 w-full">
+                                    <div class="bg-accent-blue h-2.5 rounded-full" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category Item: Transport (Example of Overspent) -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div class="w-full md:w-1/4">
+                                    <h4 class="text-lg font-semibold text-dark-gray-text">Transport</h4>
+                                </div>
+                                <div class="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Budgeted</p>
+                                        <p class="text-md font-medium text-dark-gray-text">$150.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Spent</p>
+                                        <p class="text-md font-medium text-medium-gray-text">$180.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Overspent</p>
+                                        <p class="text-md font-medium text-secondary-peach">-$30.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="bg-gray-200 rounded-full h-2.5 w-full">
+                                    <div class="bg-secondary-peach h-2.5 rounded-full" style="width: 100%;"></div> <!-- Overspent progress bar -->
+                                </div>
+                                <p class="text-xs text-secondary-peach mt-1 text-right">120% spent</p>
+                            </div>
+                        </div>
+
+                        <!-- Category Item: Entertainment -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div class="w-full md:w-1/4">
+                                    <h4 class="text-lg font-semibold text-dark-gray-text">Entertainment</h4>
+                                </div>
+                                <div class="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Budgeted</p>
+                                        <p class="text-md font-medium text-dark-gray-text">$200.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Spent</p>
+                                        <p class="text-md font-medium text-medium-gray-text">$50.00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-medium-gray-text mb-0.5">Remaining</p>
+                                        <p class="text-md font-medium text-primary-green">$150.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="bg-gray-200 rounded-full h-2.5 w-full">
+                                    <div class="bg-accent-blue h-2.5 rounded-full" style="width: 25%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Add more categories as needed: Utilities, Shopping, Health, Education, Other -->
+
+                    </div>
+                </div>
+                <div id="stats-section" class="content-section hidden">
+                    <!-- Page Header -->
+                    <div class="mb-6">
+                        <h1 class="text-2xl md:text-3xl font-bold text-dark-gray-text">Financial Statistics</h1>
+                        <p class="text-medium-gray-text mt-1">Analyze your spending patterns and trends.</p>
+                    </div>
+
+                    <!-- Period Selector -->
+                    <div class="mb-8 p-4 bg-white-surface rounded-xl shadow-lg">
+                        <label for="stats-period-select" class="block text-sm font-medium text-medium-gray-text mb-2">Select Period:</label>
+                        <select id="stats-period-select" name="stats-period-select"
+                                class="block w-full md:w-auto pl-3 pr-10 py-2.5 text-base border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue sm:text-sm rounded-lg shadow-sm neumorphic-inset">
+                            <option selected>This Month</option>
+                            <option>Last Month</option>
+                            <option>Last 3 Months</option>
+                            <option>This Year</option>
+                            <option>All Time</option>
+                        </select>
+                    </div>
+
+                    <!-- Charts Area -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Spending by Category (Pie Chart) -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-6">
+                            <h3 class="text-lg font-semibold text-dark-gray-text mb-4">Spending by Category</h3>
+                            <div class="aspect-w-1 aspect-h-1"> <!-- For responsive square canvas container -->
+                                <canvas id="spendingByCategoryChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Monthly Spending Trend (Bar Chart) -->
+                        <div class="bg-white-surface rounded-xl shadow-lg p-6">
+                            <h3 class="text-lg font-semibold text-dark-gray-text mb-4">Monthly Spending Trend</h3>
+                             <div class="aspect-w-16 aspect-h-9"> <!-- For responsive 16:9 canvas container -->
+                                <canvas id="monthlySpendingTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="add-expense-section" class="content-section hidden">
+                    <h1 class="text-2xl font-semibold text-dark-gray-text">Add New Expense</h1>
+                    <p class="text-medium-gray-text mt-2">Log a new transaction here.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Bottom Navigation -->
+        <nav id="mobile-bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white-surface shadow-t-lg border-t border-gray-200 flex justify-around items-center h-16">
+            <a href="#" data-section="dashboard-section" class="nav-link-mobile active-link-mobile flex flex-col items-center justify-center text-xs text-accent-blue pt-1">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                Dashboard
+            </a>
+            <a href="#" data-section="budget-section" class="nav-link-mobile flex flex-col items-center justify-center text-xs text-medium-gray-text hover:text-accent-blue pt-1">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                Budget
+            </a>
+            <a href="#" data-section="add-expense-section" class="nav-link-mobile flex flex-col items-center justify-center text-xs text-medium-gray-text hover:text-accent-blue pt-1">
+                <svg class="w-7 h-7 mb-0.5 text-primary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Add Expense
+            </a>
+            <a href="#" data-section="stats-section" class="nav-link-mobile flex flex-col items-center justify-center text-xs text-medium-gray-text hover:text-accent-blue pt-1">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                Statistics
+            </a>
+        </nav>
+    </div>
+
+    <style>
+        .active-link {
+            background-color: #E3F2FD; /* A light variant of accent-blue for active state */
+            color: #424242; /* dark-gray-text */
+            border-left: 3px solid #90CAF9; /* accent-blue */
+            padding-left: calc(0.75rem - 3px); /* 0.75rem is px-3, adjust for border */
+        }
+        .active-link svg {
+            color: #90CAF9; /* accent-blue */
+        }
+        .nav-link:hover svg {
+            color: #64B5F6; /* A slightly darker accent-blue on hover */
+        }
+
+        .active-link-mobile {
+            color: #90CAF9; /* accent-blue */
+        }
+        .active-link-mobile svg {
+            /* Icons in mobile nav already colored via text-accent-blue, or specific color like primary-green */
+        }
+        .shadow-t-lg { /* Custom shadow for top shadow on mobile nav */
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .neumorphic-inset {
+            box-shadow: inset 2px 2px 5px #E0E0E0, inset -2px -2px 5px #FFFFFF;
+        }
+        .neumorphic-inset:focus { /* Added focus style for consistency with login/register if needed */
+            box-shadow: inset 1px 1px 3px #E0E0E0, inset -1px -1px 3px #FFFFFF, 0 0 0 2px #90CAF9; /* Using accent-blue for focus ring */
+        }
+    </style>
+</body>
+</html>

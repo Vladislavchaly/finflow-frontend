@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinFlow - Register</title>
+    <link rel="stylesheet" href="../css/output.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-light-gray-bg font-sans">
+    <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white-surface p-8 sm:p-10 rounded-xl shadow-lg w-full max-w-md">
+            <div class="flex justify-center mb-6">
+                <img src="../img/logo.svg" alt="FinFlow Logo" class="h-12 w-auto">
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-dark-gray-text text-center mb-8">
+                Create your FinFlow Account
+            </h2>
+            <div id="register-error" class="text-secondary-peach text-sm mb-4 text-center"></div>
+            <form id="register-form" action="#" method="POST" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-medium-gray-text">Email Address</label>
+                    <div class="mt-1">
+                        <input id="email" name="email" type="email" autocomplete="email" required
+                               class="appearance-none block w-full px-4 py-3 rounded-lg bg-white-surface border border-gray-300 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue sm:text-sm neumorphic-inset"
+                               placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-medium-gray-text">Password</label>
+                    <div class="mt-1">
+                        <input id="password" name="password" type="password" autocomplete="new-password" required
+                               class="appearance-none block w-full px-4 py-3 rounded-lg bg-white-surface border border-gray-300 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue sm:text-sm neumorphic-inset"
+                               placeholder="••••••••">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="confirm-password" class="block text-sm font-medium text-medium-gray-text">Confirm Password</label>
+                    <div class="mt-1">
+                        <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" required
+                               class="appearance-none block w-full px-4 py-3 rounded-lg bg-white-surface border border-gray-300 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue sm:text-sm neumorphic-inset"
+                               placeholder="••••••••">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white-surface bg-primary-green hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green">
+                        Register
+                    </button>
+                </div>
+            </form>
+
+            <p class="mt-8 text-center text-sm">
+                <a href="login.html" class="font-medium text-accent-blue hover:text-blue-500">
+                    Already have an account? Login
+                </a>
+            </p>
+        </div>
+    </div>
+    <style>
+        .neumorphic-inset {
+            box-shadow: inset 2px 2px 5px #E0E0E0, inset -2px -2px 5px #FFFFFF;
+        }
+        .neumorphic-inset:focus {
+            box-shadow: inset 1px 1px 3px #E0E0E0, inset -1px -1px 3px #FFFFFF, 0 0 0 2px #90CAF9;
+        }
+    </style>
+    <script type="module" src="../js/src/registerPage.js"></script>
+</body>
+</html>
