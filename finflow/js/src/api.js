@@ -1,7 +1,21 @@
 // finflow/js/src/api.js
+/**
+ * Provides a centralized function for making API requests using fetch.
+ * Handles setting common headers, authorization, and basic error processing,
+ * including 401 unauthorized responses.
+ */
 import { BASE_API_URL } from './config.js';
 import { getToken, logoutUser, redirectToLogin } from './auth.js';
 
+/**
+ * Makes an API request to the specified endpoint.
+ * @param {string} endpoint - The API endpoint (e.g., '/transactions').
+ * @param {string} [method='GET'] - The HTTP method (GET, POST, PUT, DELETE, etc.).
+ * @param {Object|null} [data=null] - The request payload for POST/PUT requests.
+ * @param {boolean} [requiresAuth=true] - Whether the request requires authentication (adds Authorization header).
+ * @returns {Promise<Object|null>} A promise that resolves with the JSON response data, or null for 204 responses.
+ * @throws {Object} An error object with `status` and `data` (parsed error response) or `message` for network errors.
+ */
 export async function apiRequest(endpoint, method = 'GET', data = null, requiresAuth = true) {
     const url = BASE_API_URL + endpoint;
     const options = {
@@ -43,31 +57,33 @@ export async function apiRequest(endpoint, method = 'GET', data = null, requires
             // For other errors (400, 403, 500, etc.)
             let errorData;
             try {
-                errorData = await response.json();
+                errorData = await response.json(); // Attempt to parse error response as JSON
             } catch (e) {
+                // If error response is not JSON, use statusText or a generic message
                 errorData = { message: response.statusText || 'An unknown error occurred' };
             }
             console.error('API request failed:', response.status, errorData);
-            throw { status: response.status, data: errorData };
+            throw { status: response.status, data: errorData }; // Throw structured error
         }
         
-        // Check content type before parsing JSON
+        // Check content type before parsing JSON for successful responses
         // For 204 No Content, response.json() would error
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.indexOf("application/json") !== -1) {
-            return await response.json();
+            return await response.json(); // Parse and return JSON body
         } else if (response.status === 204) {
-            return null; // Or an empty object/array, depending on expected response
+            return null; // No content to parse, return null
         } else {
-            return await response.text(); // Or handle as blob, etc. if needed
+            // Handle other content types (e.g., text/plain) if necessary, or assume no body for other cases
+            return await response.text(); 
         }
 
     } catch (error) {
-        // Re-throw the error to be caught by the calling function if it's already structured
-        if (error.status && error.data) {
+        // Re-throw the error if it's already a structured error from the above block
+        if (error.status !== undefined && error.data !== undefined) { // Check for undefined to allow status: null
             throw error;
         }
-        // Log and re-throw other network errors or issues from the fetch itself
+        // Log and re-throw other network errors or issues from the fetch call itself as a structured error
         console.error('Network error or issue with fetch call:', error);
         throw { status: null, data: { message: error.message || 'Network error' } };
     }
